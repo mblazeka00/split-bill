@@ -35,7 +35,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app">
       <div className="sidebar">
         <FriendsList data={data} />
         {addFriendForm ? <FormAddFriend onAddFriend={onAddFriend} /> : ""}
@@ -43,11 +43,36 @@ function App() {
           {addFriendForm === true ? "Cancel" : "Add friend"}
         </Button>
       </div>
+      <FormSplitBill />
     </div>
   );
 }
 
 export default App;
+
+function FormSplitBill() {
+  return (
+    <form className="form-split-bill">
+      <h2>SPLIT A BILL WITH ANTHONY</h2>
+
+      <label>💰 Bill value</label>
+      <input type="text" />
+
+      <label>🧍 Your expense</label>
+      <input type="text" />
+
+      <label>👭 Anthony's expense</label>
+      <input type="text" disabled />
+
+      <label>🤑 Who is paying the bill</label>
+      <select>
+        <option value="user">You</option>
+        <option value="friend">Anthony</option>
+      </select>
+      <Button>Split</Button>
+    </form>
+  );
+}
 
 function FormAddFriend({ onAddFriend }) {
   const [friendName, setFriendName] = useState("");
@@ -105,8 +130,16 @@ function Friend({ friend }) {
     <li>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
-      <p>
-        {friend.name} owes you ${friend.balance}
+      <p
+        className={
+          friend.balance > 0 ? "green" : "" || friend.balance < 0 ? "red" : ""
+        }
+      >
+        {friend.balance === 0 ? `You and ${friend.name} are even.` : ""}
+        {friend.balance > 0 ? `${friend.name} owes you $${friend.balance}` : ""}
+        {friend.balance < 0
+          ? `You owe ${friend.name} $${Math.abs(friend.balance)}`
+          : ""}
       </p>
       <button className="button">Select</button>
     </li>
