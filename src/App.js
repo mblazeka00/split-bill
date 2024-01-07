@@ -31,7 +31,7 @@ function App() {
 
   const onAddFriend = (friend) => {
     setData((cur) => [...cur, friend]);
-    console.log(data);
+    onAddFriendForm(false);
   };
 
   return (
@@ -65,6 +65,8 @@ function FormAddFriend({ onAddFriend }) {
   function handleAddFriend(e) {
     e.preventDefault();
     onAddFriend(newFriend);
+    setFriendName("");
+    setFriendImageURL("https://i.pravatar.cc/48");
   }
 
   return (
