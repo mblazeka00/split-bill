@@ -43,4 +43,6 @@ function FormAddFriend() {
   );
 }
 
-function FriendsList() {}
+function FriendsList() {
+  return <h2>Test</h2>;
+}
