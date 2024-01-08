@@ -42,20 +42,28 @@ function App() {
     }
   };
 
-  const handleSplitBill = (whoIsPaying, paidByFriend, event) => {
+  const handleSplitBill = (
+    billValue,
+    whoIsPaying,
+    paidByFriend,
+    paidByUser,
+    event
+  ) => {
     event.preventDefault();
+    if (!billValue | !paidByUser) return;
     const updatedFriends = data.map((friend) => {
       if (friend.id === selectedFriend.id) {
         if (whoIsPaying === "user") {
           return { ...friend, balance: friend.balance + paidByFriend };
         } else {
-          return { ...friend, balance: friend.balance - paidByFriend };
+          return { ...friend, balance: friend.balance - paidByUser };
         }
       }
       return friend;
     });
 
     setData(updatedFriends);
+    setSelectedFriend(null);
   };
 
   return (
@@ -119,7 +127,11 @@ function FormSplitBill({ selectedFriend, onSplitBill }) {
         <option value="user">You</option>
         <option value="friend">{selectedFriend.name}</option>
       </select>
-      <Button onClick={(e) => onSplitBill(whoIsPaying, paidByFriend, e)}>
+      <Button
+        onClick={(e) =>
+          onSplitBill(billValue, whoIsPaying, paidByFriend, paidByUser, e)
+        }
+      >
         Split
       </Button>
     </form>
